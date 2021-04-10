@@ -1,0 +1,39 @@
+databaseChangeLog:
+ - changeSet:
+    id: survey
+    author: edgar
+    changes:
+      -
+        tableName: "survey"
+        columns:
+        - column:
+            name: id
+            type: LONG
+            autoIncrement: true
+            constrants:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: nameSurvey
+            type: java.sql.Types.VARCHAR(255)
+            autoIncrement: true
+            constrants:
+              nullable: false
+        - column:
+            name: startDate
+            type: DATETIME
+            autoIncrement: true
+            constrants:
+              nullable: false
+        - column:
+            name: endDate
+            type: DATETIME
+            autoIncrement: true
+            constrants:
+              nullable: false
+        - column:
+            name: activity
+            type: java.sql.Types.BOOLEAN
+            autoIncrement: true
+            constrants:
+              nullable: false
