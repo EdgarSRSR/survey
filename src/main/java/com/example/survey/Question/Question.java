@@ -23,9 +23,12 @@ public class Question {
   private String text;
   private int displayOrder;
 
-  @JsonIgnore
-  @ManyToMany(mappedBy = "questions")
-  private List<Survey> surveys;
+  Question(){}
+  public Question(String link, String text, int displayOrder) {
+    this.link = link;
+    this.text = text;
+    this.displayOrder = displayOrder;
+  }
 
   public Question(String link, String text, int displayOrder) {
     this.link = link;
@@ -50,6 +53,14 @@ public class Question {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getLink() {
+    return link;
+  }
+
+  public void setLink(String link) {
+    this.link = link;
   }
 
   public String getText() {

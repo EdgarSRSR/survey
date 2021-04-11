@@ -1,5 +1,6 @@
 package com.example.survey.Question;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,5 +16,6 @@ public class QuestionNotFoundAdvice {
   String questionNotFoundHandler(QuestionNotFoundException ex) {
     return ex.getMessage();
   }
+
 
 }

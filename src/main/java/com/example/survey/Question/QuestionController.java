@@ -1,16 +1,7 @@
 package com.example.survey.Question;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import com.example.survey.Survey.Survey;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.Entity;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,72 +13,54 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class QuestionController {
 
-  private final QuestionRepository questionRepository;
-  private final QuestionModelAssembler assembler;
+  private final QuestionRepository repository;
 
-  QuestionController(QuestionRepository questionRepository, QuestionModelAssembler assembler) {
-
-    this.questionRepository = questionRepository;
-    this.assembler = assembler;
+  QuestionController(QuestionRepository repository) {
+    this.repository = repository;
   }
 
-  @GetMapping("/question")
-  CollectionModel<EntityModel<Question>> all() {
 
-    List<EntityModel<Question>> questions = questionRepository.findAll().stream() //
-        .map(assembler::toModel) //
-        .collect(Collectors.toList());
-
-    return CollectionModel.of(questions, //
-        linkTo(methodOn(QuestionController.class).all()).withSelfRel());
+  // Aggregate root
+  // tag::get-aggregate-root[]
+  @GetMapping("/questions")
+  List<Question> all() {
+    return repository.findAll();
   }
-
-  @GetMapping("/questions/{id}")
-  EntityModel<Question> one(@PathVariable Long id) {
-
-    Question question = questionRepository.findById(id) //
-        .orElseThrow(() -> new QuestionNotFoundException(id));
-
-    return assembler.toModel(question);
-  }
+  // end::get-aggregate-root[]
 
   @PostMapping("/questions")
-  ResponseEntity<?> newQuestion(@RequestBody Question newQuestion) {
+  Question newQuestion(@RequestBody Question newQuestion) {
+    return repository.save(newQuestion);
+  }
 
-    EntityModel<Question> entityModel = assembler.toModel(questionRepository.save(newQuestion));
-    return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-        .body(entityModel);
+  // Single item
+
+  @GetMapping("/questions/{id}")
+  Question one(@PathVariable Long id) {
+
+    return repository.findById(id)
+        .orElseThrow(() -> new QuestionNotFoundException(id));
   }
 
   @PutMapping("/questions/{id}")
-  ResponseEntity<?> replaceQuestion(@RequestBody Question newQuestion, @PathVariable Long id) {
+  Question replaceQuestion(@RequestBody Question newQuestion, @PathVariable Long id) {
 
-    Question updatedQuestion = questionRepository.findById(id) //
+    return repository.findById(id)
         .map(question -> {
           question.setLink(newQuestion.getLink());
           question.setText(newQuestion.getText());
           question.setDisplayOrder(newQuestion.getDisplayOrder());
-
-          return questionRepository.save(question);
-        }) //
+          return repository.save(question);
+        })
         .orElseGet(() -> {
           newQuestion.setId(id);
-          return questionRepository.save(newQuestion);
+          return repository.save(newQuestion);
         });
-
-    EntityModel<Question> entityModel = assembler.toModel(updatedQuestion);
-
-    return ResponseEntity //
-        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-        .body(entityModel);
   }
 
   @DeleteMapping("/questions/{id}")
-  ResponseEntity<?> deleteQuestion(@PathVariable Long id) {
-    questionRepository.deleteById(id);
-    return ResponseEntity.noContent().build();
-
+  void deleteQuestion(@PathVariable Long id) {
+    repository.deleteById(id);
   }
+
 }
-
-

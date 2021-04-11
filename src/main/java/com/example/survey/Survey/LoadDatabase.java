@@ -15,15 +15,11 @@ class LoadDatabase {
   private static final Logger log  = LoggerFactory.getLogger(LoadDatabase.class);
 
   @Bean
-  CommandLineRunner initDatabase(SurveyRepository surveyrepository, QuestionRepository questionRepository) {
+  CommandLineRunner initDatabase(SurveyRepository surveyRepository, QuestionRepository questionRepository) {
 
     return args -> {
-      surveyrepository.save(new Survey("Test survey",  new Date(2017,10,22),  new Date(2017,10,23 ), true ));
-
-
-      questionRepository.save(new Question("www.test.com","what is your name?", 1));
-
-
+      log.info("Preloading " + surveyRepository.save(new Survey("Test survey",  new Date(2017,10,22),  new Date(2017,10,23 ), true )));
+      log.info("Preloading " + questionRepository.save(new Question("www.survey.com", "whats your name?", 1 )));
     };
   }
 
