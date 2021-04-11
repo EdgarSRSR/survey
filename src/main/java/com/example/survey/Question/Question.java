@@ -27,6 +27,13 @@ public class Question {
   @ManyToMany(mappedBy = "questions")
   private List<Survey> surveys;
 
+  public Question(String link, String text, int displayOrder) {
+    this.link = link;
+    this.text = text;
+    this.displayOrder = displayOrder;
+
+  }
+
   @Override
   public String toString() {
     return "Question{" +
@@ -59,6 +66,22 @@ public class Question {
 
   public void setDisplayOrder(int displayOrder) {
     this.displayOrder = displayOrder;
+  }
+
+  public String getLink() {
+    return link;
+  }
+
+  public void setLink(String link) {
+    this.link = link;
+  }
+
+  public List<Survey> getSurveys() {
+    return surveys;
+  }
+
+  public void setSurveys(List<Survey> surveys) {
+    this.surveys = surveys;
   }
 
   @Override

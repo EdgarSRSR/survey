@@ -1,4 +1,4 @@
-package com.example.survey.Survey;
+package com.example.survey.Question;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-class EmployeeNotFoundAdvice {
+public class QuestionNotFoundAdvice {
 
   @ResponseBody
-  @ExceptionHandler(SurveyNotFoundException.class)
+  @ExceptionHandler(QuestionNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  String surveyNotFoundHandler(SurveyNotFoundException ex) {
+  String questionNotFoundHandler(QuestionNotFoundException ex) {
     return ex.getMessage();
   }
 

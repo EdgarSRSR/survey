@@ -4,6 +4,9 @@ import com.example.survey.Question.Question;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.Id;
 
 import java.util.Objects;
@@ -34,15 +37,17 @@ public class Survey {
   @JoinTable(name = "survey_question",
       joinColumns = @JoinColumn(name = "survey_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
-  private List<Question> questions;
+  private Set<Question> questions;
 
-  Survey(){}
+  Survey(String test_survey, Date date, Date date1, boolean b){}
 
-  public Survey(String nameSurvey, Date startDate, Date endDate, Boolean activity) {
+  public Survey(String nameSurvey, Date startDate, Date endDate, Boolean activity, Question question) {
     this.nameSurvey = nameSurvey;
     this.startDate = startDate;
     this.endDate = endDate;
     this.activity = activity;
+    this.questions = Stream.of(question).collect(Collectors.toSet());
+    this.questions.forEach(x -> x.getSurveys().add(this));
   }
 
   public Long getId() {
@@ -83,6 +88,14 @@ public class Survey {
 
   public void setActivity(Boolean activity) {
     this.activity = activity;
+  }
+
+  public Set<Question> getQuestions() {
+    return questions;
+  }
+
+  public void setQuestions(Set<Question> questions) {
+    this.questions = questions;
   }
 
   @Override
