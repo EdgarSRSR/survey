@@ -16,7 +16,7 @@ class LoadDatabase {
   CommandLineRunner initDatabase(SurveyRepository repository) {
 
     return args -> {
-      log.info("Preloading " + repository.save(new Survey("Test survey",  new Date(2017,10,22),  new Date(2017,10,23), true )));
+      log.info("Preloading " + repository.save(new Survey("Test survey",  new Date(2017,10,22),  new Date(2017,10,23 ), true )));
     };
   }
 

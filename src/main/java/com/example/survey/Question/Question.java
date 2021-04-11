@@ -1,6 +1,7 @@
 package com.example.survey.Question;
 
 import com.example.survey.Survey.Survey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -9,8 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 
 @Entity
+@Table(name = "question")
 public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +23,8 @@ public class Question {
   private String text;
   private int displayOrder;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @JsonIgnore
+  @ManyToMany(mappedBy = "questions")
   private List<Survey> surveys;
 
   @Override

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Id;
 
 import java.util.Objects;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -28,8 +30,10 @@ public class Survey {
 
   private Boolean activity;
 
-  @JsonIgnore
-  @ManyToMany(mappedBy = "survey")
+  @ManyToMany
+  @JoinTable(name = "survey_question",
+      joinColumns = @JoinColumn(name = "survey_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
   private List<Question> questions;
 
   Survey(){}
