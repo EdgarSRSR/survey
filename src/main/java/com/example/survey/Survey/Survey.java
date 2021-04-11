@@ -1,16 +1,20 @@
 package com.example.survey.Survey;
 
+import com.example.survey.Question.Question;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.Id;
 
 import java.util.Objects;
-
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import org.hibernate.annotations.Table;
 
 @Entity
-@Table(appliesTo = "survey")
+@Table(name = "survey")
 public class Survey {
 
   private @Id @GeneratedValue
@@ -23,6 +27,10 @@ public class Survey {
   private Date endDate;
 
   private Boolean activity;
+
+  @JsonIgnore
+  @ManyToMany(mappedBy = "survey")
+  private List<Question> questions;
 
   Survey(){}
 
