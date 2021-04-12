@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-
+// Опрос
 @Entity
 @Table(name = "survey")
 public class Survey {
@@ -22,12 +22,16 @@ public class Survey {
   private @Id @GeneratedValue
   Long id;
 
+  // Наименование опроса
   private String nameSurvey;
 
+  // Дата начала
   private Date startDate;
 
+  // Дата окончания
   private Date endDate;
 
+  // Активность (да/нет)
   private Boolean activity;
 
 

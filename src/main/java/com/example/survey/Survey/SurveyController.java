@@ -34,6 +34,7 @@ public class SurveyController {
 
   // Aggregate root
   // tag::get-aggregate-root[]
+  //  Получить все опросы
   @GetMapping("/surveys")
   CollectionModel<EntityModel<Survey>> all() {
 
@@ -43,8 +44,8 @@ public class SurveyController {
 
     return CollectionModel.of(surveys, linkTo(methodOn(SurveyController.class).all()).withSelfRel());
   }
-  // end::get-aggregate-root[]
 
+  // Создание опроса
   @PostMapping("/surveys")
   ResponseEntity<?> newSurvey( Survey newSurvey) {
 
@@ -53,7 +54,7 @@ public class SurveyController {
         .body(entityModel);
   }
 
-  // Single item
+  // один элемент
 
   @GetMapping("/surveys/{id}")
   EntityModel <Survey> one(@PathVariable Long id) {
@@ -62,6 +63,7 @@ public class SurveyController {
     return assembler.toModel(survey);
   }
 
+  //Редактирование опроса
   @PutMapping("/surveys/{id}")
   ResponseEntity<?> replaceSurvey( Survey newSurvey, @PathVariable Long id) {
 
@@ -85,6 +87,7 @@ public class SurveyController {
         .body(entityModel);
   }
 
+  // Удаление опроса
   @DeleteMapping("/surveys/{id}")
   ResponseEntity<?> deleteSurvey(@PathVariable Long id) {
     repository.deleteById(id);

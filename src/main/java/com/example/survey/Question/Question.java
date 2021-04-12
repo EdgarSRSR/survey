@@ -12,15 +12,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-
+// Вопрос опроса
 @Entity
 @Table(name = "question")
 public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  //Ссылка на опрос
   private String link;
+  //Текст вопроса
   private String text;
+  // Порядок отображения
   private int displayOrder;
 
   Question(){}
