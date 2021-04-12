@@ -30,12 +30,7 @@ public class Question {
     this.displayOrder = displayOrder;
   }
 
-  public Question(String link, String text, int displayOrder) {
-    this.link = link;
-    this.text = text;
-    this.displayOrder = displayOrder;
 
-  }
 
   @Override
   public String toString() {
@@ -79,21 +74,6 @@ public class Question {
     this.displayOrder = displayOrder;
   }
 
-  public String getLink() {
-    return link;
-  }
-
-  public void setLink(String link) {
-    this.link = link;
-  }
-
-  public List<Survey> getSurveys() {
-    return surveys;
-  }
-
-  public void setSurveys(List<Survey> surveys) {
-    this.surveys = surveys;
-  }
 
   @Override
   public boolean equals(Object o) {

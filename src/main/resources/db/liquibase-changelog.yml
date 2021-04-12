@@ -1,6 +1,0 @@
-databaseChangeLog:
-
- - include:
-    file: db/changelog/create_survey.yml
- - include:
-    file: db/changelog/inserts.yml

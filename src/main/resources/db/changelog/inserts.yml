@@ -1,6 +1,0 @@
-databaseChangeLog:
-- changeSet:
-    id: insert
-    changes:
-      - sql:
-        sql: insert into survey(nameSurvey,startDate,endDate,activity) values("test2",'2021-06-28','2021-06-29',true)
